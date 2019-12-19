@@ -11,25 +11,26 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable{
-
+public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)//mysqlH2
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
 	private String phone;
-	private String password;	
-	
+	private String password;
+
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
-	//injecao de dependencia
 	private List<Order> orders = new ArrayList<>();
-	
+
 	public User() {
-		
 	}
 
 	public User(Long id, String name, String email, String phone, String password) {
@@ -40,10 +41,6 @@ public class User implements Serializable{
 		this.phone = phone;
 		this.password = password;
 	}
-	
-	public List<Order> getOrders() {
-		return orders;
-	}	
 
 	public Long getId() {
 		return id;
@@ -85,8 +82,8 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public List<Order> getOrders() {
+		return orders;
 	}
 
 	@Override
@@ -113,5 +110,4 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
-	
 }
